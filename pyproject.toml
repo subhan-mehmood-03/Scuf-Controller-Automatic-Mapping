@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=75,<83"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "scuf-auto-mapping"
+version = "0.1.0"
+description = "Local game detection and native iCUE Linked App setup assistant"
+requires-python = ">=3.11"
+dependencies = ["PySide6>=6.8,<6.11", "psutil>=6.1,<8"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.3,<10", "pytest-cov>=6,<8", "pytest-qt>=4.4,<5", "ruff>=0.11,<0.15", "mypy>=1.15,<2", "types-psutil>=6,<8", "pyinstaller>=6.12,<7"]
+
+[project.gui-scripts]
+scuf-auto-mapping = "scuf_auto_mapping.main:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+qt_api = "pyside6"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.mypy]
+python_version = "3.11"
+check_untyped_defs = true
+ignore_missing_imports = true
+
+[tool.coverage.run]
+source = ["scuf_auto_mapping.domain", "scuf_auto_mapping.application", "scuf_auto_mapping.infrastructure"]
+omit = ["*/foreground_win32.py"]
+
+[tool.coverage.report]
+fail_under = 85
+show_missing = true
